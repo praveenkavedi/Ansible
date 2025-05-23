@@ -1,0 +1,17 @@
+- hosts: all
+  remote_user: ec2-user
+  become: true
+  tasks:
+    - name: Install Apache
+      yum:
+        name: httpd
+        state: present
+    - name: Start Apache
+      service:
+        name: httpd
+        state: started
+    - name: copy the test file
+      copy:
+        src: /home/ec2-user/test.txt
+        dest: /var/www/html/test.txt
+        mode: '777'
