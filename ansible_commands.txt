@@ -1,0 +1,9 @@
+Ansible General commands
+    -  Ansible-playbook -i <inventory file> <playbook file>
+    - Ansible-playbook -i <inventory file> <playbook file> -e port=7989 
+    - Ansible-playbook -i <inventory file> <playbook file> --ask-vault-password
+Ansible vault commands
+    - ansible-vault encrypt test.yaml
+    - ansible-vault decrypt test.yaml
+    - ansible-vault view test.yaml
+

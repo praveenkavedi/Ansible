@@ -1,0 +1,50 @@
+- hosts: jenkins
+  remote_user: ec2-user
+  become: true
+  vars:
+    port: 7989
+  tasks:
+    - name: add jenkins repo
+      yum_repository:
+        name: jenkins
+        description: jenkins YUM repo
+        baseurl: https://pkg.jenkins.io/redhat-stable/jenkins.repo
+        gpgkey: https://pkg.jenkins.io/redhat-stable/jenkins.io-2023.key
+    - name: install java and jenkins
+      yum:
+        name: "{{item}}"
+        state: present
+      loop:
+        - fontconfig
+        - java-17-amazon-corretto
+        - jenkins
+    - name: Set Java 17 as default
+      alternatives:
+        name: java
+        path: /usr/lib/jvm/java-17-amazon-corretto.x86_64/bin/java
+    - name: start httpd
+      service:
+        name: httpd
+        enabled: true
+        state: started
+    - name: start jenkins
+      service:
+        name: jenkins
+        enabled: true
+        state: started
+    - name: change the jenkins port
+      lineinfile:
+        path: /etc/sysconfig/jenkins
+        regexp: "^JENKINS_PORT="
+        line: JENKINS_PORT={{port}}
+      notify:
+        - restart jenkins
+  handlers:
+    - name: restart jenkins
+      service:
+        name: jenkins
+        state: restarted
+
+    
+    
+

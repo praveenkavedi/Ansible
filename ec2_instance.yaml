@@ -1,0 +1,22 @@
+- hosts: localhost
+  remote_user: ec2-user
+  become: true
+  tasks:
+    - name: Create Ec2 instance
+      amazon.aws.ec2_instance:
+       key_name: AWSAnsibleKey
+       instance_type: t2.micro
+       image: ami-0af9569868786b23a
+       region: "ap-south-1"
+       wait: yes
+       count: 1
+       vpc_subnet_id: subnet-0a28b63549ca50858
+
+#Note:
+#1) use the module amazon.aws.ec2_instance instead of just ec2,
+#2)don't add assign_public_ip: yes parameter, 
+#3) install boto3 and botocore, not just boto3. then we are set. 
+
+        
+
+   

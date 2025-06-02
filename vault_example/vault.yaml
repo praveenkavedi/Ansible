@@ -1,0 +1,9 @@
+- hosts: localhost
+  remote_user: ec2-user
+  become: true
+  vars_files:
+    creds_file.yaml
+  tasks:
+  - name: show the creds
+    debug:
+      msg: "The valut username is {{username}} and the password is {{password}}"
