@@ -2,8 +2,8 @@
   remote_user: ec2-user
   become: true
   vars_files:
-    creds_file.yaml
+    - creds.yaml
   tasks:
-  - name: show the creds
-    debug:
-      msg: "The valut username is {{username}} and the password is {{password}}"
+    - name: show the creds
+      debug:
+        msg: "The valut username is {{username}} and the password is {{password}}"
