@@ -1,0 +1,18 @@
+we doon't need to pass the vaault password each time when we are executing the playbook. 
+
+There are two alternaticve ways we can handle this.
+
+Step1 :  store the password in a txt file and change the mode to 600(only owner)
+            echo 'your_vault_password' > ~/.ansible_vault_pass.txt
+            chmod 600 ~/.ansible_vault_pass.txt
+Step2: two ways to ask ansible to fetch the password from this file, 
+        - instead of --ask-vault-password, use --vault-password-file like below, 
+            ansible-playbook playbook.yml --vault-password-file ~/.ansible_vault_pass.txt
+        
+        - But the recommended way is to update this file in the ansible configuration file as an environment varible
+            like, 
+                # ansible.cfg
+                [defaults]
+                vault_password_file = ~/.ansible_vault_pass.txt
+                
+                then we don't need to pass the creds in the CLI. 

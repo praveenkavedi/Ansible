@@ -7,3 +7,5 @@ Ansible vault commands
     - ansible-vault decrypt test.yaml
     - ansible-vault view test.yaml
 
+Ansible roles commands:
+    - ansible-galaxy init apache
